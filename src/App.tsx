@@ -56,9 +56,9 @@ function App(){
  const [phone,setPhone]=useState("");
  const [showPhone,setShowPhone]=useState(false);
 
- useEffect(()=>{let live=true;api("/api/me").then((d)=>{if(live){setUser(d.user);setStage("profiles");}}).catch(()=>{});return()=>{live=false;}},[]);
+ useEffect(()=>{let live=true;const resetToken=new URLSearchParams(window.location.search).get("reset");if(resetToken){(window as any).__dtResetToken=resetToken;setStage("reset");setMessage("Choose a new password for your account.");window.history.replaceState({},"",window.location.pathname);return()=>{live=false;};}api("/api/me").then((d)=>{if(live){setUser(d.user);setStage("profiles");}}).catch(()=>{});return()=>{live=false;}},[]);
  useEffect(()=>{if(stage!=="opening")return;const t=window.setTimeout(()=>setStage("login"),3500);return()=>window.clearTimeout(t)},[stage]);
- useEffect(()=>{const token=new URLSearchParams(window.location.search).get("reset");if(token){setStage("reset");setMessage("Choose a new password for your account.");window.history.replaceState({},"",window.location.pathname);(window as any).__dtResetToken=token;}},[]);
+ 
  const run=async(fn:()=>Promise<void>)=>{setBusy(true);setMessage("");try{await fn();}catch(e){setMessage(e instanceof Error?e.message:"Something went wrong.");}finally{setBusy(false);}};
  const login=()=>run(async()=>{const d=await api("/api/login",{identifier,password});setUser(d.user);setPassword("");setStage("profiles");});
  const register=()=>run(async()=>{await api("/api/register",registration);setMessage("Registration successful. Open the verification link sent to your email, then return here to sign in.");setStage("login");setIdentifier(registration.email);setRegistration(blankRegistration);});
