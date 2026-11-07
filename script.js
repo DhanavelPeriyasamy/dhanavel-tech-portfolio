@@ -1,11 +1,1 @@
-const menuButton = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".nav");
-menuButton?.addEventListener("click", () => {
-  const open = nav.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", String(open));
-});
-nav?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-  nav.classList.remove("open");
-  menuButton?.setAttribute("aria-expanded", "false");
-}));
-document.querySelector("#year").textContent = new Date().getFullYear();
+const toggle=document.querySelector(".menu-toggle");const nav=document.querySelector(".nav-links");toggle?.addEventListener("click",()=>{const open=nav.classList.toggle("open");toggle.setAttribute("aria-expanded",String(open));});nav?.querySelectorAll("a").forEach(a=>{if(a.getAttribute("href")===location.pathname) a.setAttribute("aria-current","page");a.addEventListener("click",()=>nav.classList.remove("open"));});const year=document.querySelector("#year");if(year)year.textContent=new Date().getFullYear();const form=document.querySelector("#contact-form");form?.addEventListener("submit",e=>{e.preventDefault();const d=new FormData(form);const subject=encodeURIComponent(d.get("subject"));const body=encodeURIComponent("Name: "+d.get("name")+"\nEmail: "+d.get("email")+"\n\n"+d.get("message"));location.href="mailto:dhanavelperiyasamy.cse@gmail.com?subject="+subject+"&body="+body;});
