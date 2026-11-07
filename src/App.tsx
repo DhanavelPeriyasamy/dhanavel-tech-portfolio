@@ -13,7 +13,7 @@ function Header(){ const [open,setOpen]=useState(false); const close=()=>setOpen
 function Footer(){return <footer className="site-footer"><Link className="brand" to="/"><img className="brand-logo" src="/assets/Logo.jpg" alt="Dhanavel Tech logo"/><span>DHANAVEL <b>TECH</b></span></Link><span>BUILT WITH CURIOSITY & INTENTION.</span><span>© {new Date().getFullYear()} DHANAVEL PERIYASAMY</span></footer>;}
 function Layout(){return <><ScrollReset/><Header/><Routes>
 <Route path="/" element={<Home/>}/><Route path="/about" element={<About/>}/><Route path="/skills" element={<Skills/>}/><Route path="/projects" element={<Projects/>}/><Route path="/experience" element={<Experience/>}/><Route path="/certificates" element={<Certificates/>}/><Route path="/contact" element={<Contact/>}/><Route path="/resume" element={<Resume/>}/>
-{projects.map(p=><><Route key={p.id} path={`/projects/${p.id}`} element={<ProjectDetail project={p}/>}/><Route key={`${p.id}-dashboard`} path={`/projects/${p.id}/dashboard`} element={<DashboardPage project={p}/>}/></>)}
+{projects.map(p=><Route key={p.id} path={`/projects/${p.id}`} element={<ProjectDetail project={p}/>}/>)}{projects.map(p=><Route key={`${p.id}-dashboard`} path={`/projects/${p.id}/dashboard`} element={<DashboardPage project={p}/>}/>)}
 <Route path="*" element={<NotFound/>}/>
 </Routes><Footer/></>}
 function Eyebrow({children}:{children:ReactNode}){return <p className="eyebrow">{children}</p>}
