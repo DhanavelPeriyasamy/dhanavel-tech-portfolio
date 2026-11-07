@@ -50,10 +50,12 @@ function App(){
   setUserId(user.id);
   const {data:roleData}=await supabase.from('dt_user_roles').select('role').eq('user_id',user.id).maybeSingle();
   if(roleData?.role==='super_admin'){setStage('profiles');return;}
-  const {data:access}=await supabase.from('dt_visitor_access').select('status,full_name').eq('user_id',user.id).maybeSingle();
-  if(access?.status==='approved'){setStage('profiles');return;}
-  if(access?.status==='pending'){setPendingName(access.full_name||'');setStage('pending');return;}
+  const {data:access}=await supabase.from('dt_visitor_access').select('status,full_name,company,job_title,reason,linkedin_url').eq('user_id',user.id).maybeSingle();
   if(access?.status==='rejected'){setAuthMessage('Your access request was declined. Please contact the portfolio owner.');await supabase.auth.signOut();setStage('login');return;}
+  if(access?.full_name?.trim()&&access?.company?.trim()&&access?.job_title?.trim()&&access?.reason?.trim()){
+   setPendingName(access.full_name);setStage('profiles');return;
+  }
+  if(access)setRegistration({full_name:access.full_name||'',company:access.company||'',job_title:access.job_title||'',reason:access.reason||'',linkedin_url:access.linkedin_url||''});
   setStage('register');
  };
  const sendOtp=async()=>{
@@ -82,9 +84,14 @@ function App(){
   if(!supabase||!userId)return;
   if(!registration.full_name.trim()||!registration.company.trim()||!registration.job_title.trim()||!registration.reason.trim()){setAuthMessage('Please complete your name, company, job title and reason for access.');return;}
   setBusy(true);setAuthMessage('');
-  const {error}=await supabase.from('dt_visitor_access').insert({user_id:userId,...registration,status:'pending'});
+  const {data:existing,error:lookupError}=await supabase.from('dt_visitor_access').select('user_id').eq('user_id',userId).maybeSingle();
+  if(lookupError){setBusy(false);setAuthMessage(lookupError.message);return;}
+  const payload={...registration,status:'approved',updated_at:new Date().toISOString()};
+  const result=existing
+   ? await supabase.from('dt_visitor_access').update(payload).eq('user_id',userId)
+   : await supabase.from('dt_visitor_access').insert({user_id:userId,...payload});
   setBusy(false);
-  if(error){setAuthMessage(error.message);return;}
+  if(result.error){setAuthMessage(result.error.message);return;}
   setPendingName(registration.full_name);setStage('profiles');
  };
  useEffect(()=>{if(stage!=='opening')return;const t=window.setTimeout(()=>setStage('login'),5000);return()=>window.clearTimeout(t)},[stage]);
