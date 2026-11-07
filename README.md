@@ -1,44 +1,41 @@
 # Dhanavel Tech — The Data Series
 
-A cinematic, interactive React portfolio for **Dhanavel Periyasamy**, inspired by the streaming-series presentation style of the reference portfolio shared by the owner. This is a separately maintained personal adaptation; it does not include the reference creator's personal images or resume.
+Personal portfolio for Dhanavel Periyasamy, built with React, Vite, TypeScript and Framer Motion.
 
 ## Features
-- Five-second cinematic opening with skip option
-- Recruiter, Data Analyst and Project Explorer profile views
-- Animated hero, timeline, project details, skills and certificate sections
-- Project detail popups with repository links and synthetic-data limitations
-- Resume preview and download slot
-- Responsive dark, electric-blue visual design
+- Responsive portfolio with opening animation and Recruiter / Data Analyst / Project Explorer views
+- Project details, certificate links, education and work timeline
+- Resume preview and download
+- MongoDB Atlas-backed visitor registration and authentication
+- Username or email sign-in, email verification and password reset
+- HttpOnly session cookie, bcrypt password hashing and rate-limited auth endpoints
+- Super Admin role assigned only after verification of the owner email
+- Private phone endpoint requires an authenticated, verified session
 
-## Tech stack
-React 18 · Vite · TypeScript-ready JSX · Framer Motion · CSS
+## Stack
+React 18 · Vite · TypeScript · Framer Motion · Vercel Functions · MongoDB Atlas · bcryptjs · JWT · Resend
 
-## Run locally
+## Required Vercel environment variables
+- `MONGODB_URI` — MongoDB Atlas connection string for database `dhanaveltech`
+- `SESSION_SECRET` — cryptographically random secret (at least 48 random bytes)
+- `APP_URL` — exact deployed origin, e.g. `https://dhanavel-tech-portfolio.vercel.app`
+- `RESEND_API_KEY` — Resend API key
+- `EMAIL_FROM` — sender identity verified in Resend, e.g. `Dhanavel Tech <no-reply@your-verified-domain>`
+
+Set production environment values before testing registration. Configure APP_URL to match the production deployment origin exactly. Email sending requires a sender/domain accepted by Resend.
+
+## Local development
 ```bash
 npm install
 npm run dev
 ```
 
-## Build for deployment
-```bash
-npm run build
-npm run preview
-```
+The API is deployed as a Vercel Node.js catch-all function at `api/[...path].js`. The browser must call it from the same origin.
 
-Deploy as a **Vite static site** on Vercel or Netlify. Build command: `npm run build`; output folder: `dist`.
-
-## Add your personal assets
-1. Upload your resume to `public/assets/Dhanavel_Periyasamy_Resume.pdf`. The resume modal is configured to preview and download this file.
-2. The app expects your portrait at `public/assets/dhanavel-portrait.jpg`. Upload that file from the supplied assets ZIP. The current SVG is only a temporary visual placeholder and is not used by the hero.
-
-## Portfolio information
-- Education: B.E. Computer Science and Engineering, Karpagam Institute of Technology, CGPA 8.0.
-- Experience: Business Analyst at Tea Party (Jan–Oct 2026); Data Analytics training at Besant Technologies (Sep 2025–present).
-- Projects: Hospital Analytics Dashboard, Student Performance Tracking System, Restaurant Management Database.
-- Six certificates: Infosys Springboard, IBM/Coursera, Meta/Coursera and HackerRank.
-
-## Data integrity notes
-The three project datasets are synthetic demonstrations. Hospital readmission flags are randomly assigned and are not validated 30-day readmission measures; no occupancy KPI is claimed without daily census data. Student support indicators are review prompts, not predictive labels. Restaurant contribution is an estimate, not audited profit, and excludes several operating costs. No numerical business impact is claimed for Tea Party because measured values were not provided.
-
-## Not yet implemented
-The current site is a public portfolio presentation. Secure visitor registration, email OTP, Google sign-in, admin approval workflow, visitor analytics, contact-message storage and protected phone-number visibility are **not active**. These require a properly configured backend and security testing before production use. The phone number is intentionally not displayed publicly.
+## Security notes
+- Never commit environment variables or secrets.
+- Rotate any database password or API key that has been shared in chat or committed.
+- Registration grants visitor access after email verification; it does not require manual approval.
+- The Super Admin role is assigned server-side only to the verified owner email.
+- The phone number is returned only by the authenticated `/api/private/contact` endpoint.
+- Review Vercel logs and perform end-to-end testing before announcing the site publicly.
