@@ -248,3 +248,19 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
 
 /* Slightly increase the About portrait frame width */
 @media(min-width:801px){.about-story-layout{grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr)}}
+
+
+/* Project cards: dashboard, repository and case-study actions */
+.project-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin-top:auto;padding-top:22px}
+.project-actions .project-action{width:100%;min-height:42px;display:flex;align-items:center;justify-content:center;text-align:center;font:9px "DM Mono";letter-spacing:.08em;text-decoration:none;padding:12px 14px}
+.project-actions .btn,.project-detail-actions .btn{margin:0}
+.project-action.secondary{border:1px solid var(--line);color:var(--ink);background:transparent}
+.project-action.secondary:hover{background:#f2e8f6;border-color:var(--lav)}
+.project-action.text{border:1px solid transparent;color:#80608e;background:transparent}
+.project-action.text:hover{color:var(--ink);background:#f5eae9}
+.project-detail-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:28px 0}
+.project-detail-actions .project-action{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;font:9px "DM Mono";letter-spacing:.08em;text-decoration:none}
+.dashboard-placeholder{max-width:780px;padding:clamp(24px,5vw,48px);background:var(--white);border:1px solid var(--line);box-shadow:12px 12px 0 #f0e4f3}
+.dashboard-placeholder h2{font-size:clamp(28px,4vw,42px);margin:18px 0 12px}
+.dashboard-placeholder>p:not(.eyebrow){max-width:620px;color:var(--muted);font-size:13px;line-height:1.9}
+@media(max-width:650px){.project-detail-actions{align-items:stretch;flex-direction:column}.project-detail-actions>*{width:100%}}
