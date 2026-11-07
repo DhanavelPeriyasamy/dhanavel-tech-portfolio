@@ -12,7 +12,6 @@
     "framer-motion": "11.18.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "@supabase/supabase-js": "^2.57.0",
     "mongodb": "^6.20.0",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2"
