@@ -1,24 +1,8 @@
 {
-  "name": "dhanavel-tech-series",
+  "name": "dhanavel-tech-portfolio",
+  "version": "2.0.0",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "framer-motion": "11.18.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "mongodb": "^6.20.0",
-    "bcryptjs": "^3.0.2",
-    "jsonwebtoken": "^9.0.2"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "4.4.1",
-    "typescript": "5.8.3",
-    "vite": "6.3.5"
-  }
+  "scripts": { "dev": "vite", "build": "vite build", "preview": "vite preview" },
+  "devDependencies": { "vite": "^6.3.5" }
 }
