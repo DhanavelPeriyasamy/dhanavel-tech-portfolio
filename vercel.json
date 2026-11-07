@@ -52,10 +52,6 @@
       "destination": "/index.html"
     },
     {
-      "source": "/projects/restaurant-management-analytics",
-      "destination": "/index.html"
-    },
-    {
       "source": "/projects/restaurant-management-analytics/dashboard",
       "destination": "/index.html"
     }
