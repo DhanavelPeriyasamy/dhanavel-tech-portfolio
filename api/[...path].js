@@ -27,8 +27,6 @@ async function getDb() {
     indexesReady = Promise.all([
       db.collection("users").createIndex({ email: 1 }, { unique: true }),
       db.collection("users").createIndex({ username: 1 }, { unique: true }),
-      db.collection("users").createIndex({ emailVerificationExpires: 1 }, { expireAfterSeconds: 0 }),
-      db.collection("users").createIndex({ resetExpires: 1 }, { expireAfterSeconds: 0 }),
       db.collection("auth_limits").createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
     ]);
   }
