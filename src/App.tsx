@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { supabase } from './lib/supabase';
 
 const EMAIL='dhanavelperiyasamy.cse@gmail.com';
 const projects=[
@@ -31,12 +32,71 @@ const journey=[
 ];
 const profiles=[{id:'recruiter',name:'Recruiter',sub:'Experience, resume and strengths',symbol:'◈'},{id:'analyst',name:'Data Analyst',sub:'Projects, tools and dashboards',symbol:'▦'},{id:'explorer',name:'Project Explorer',sub:'Explore the work in detail',symbol:'⌘'}];
 function App(){
- const [stage,setStage]=useState<'opening'|'profiles'|'home'>('opening');
+ const [stage,setStage]=useState<'opening'|'login'|'register'|'pending'|'profiles'|'home'>('opening');
  const [profile,setProfile]=useState('recruiter');
  const [active,setActive]=useState('home');
  const [selected,setSelected]=useState<typeof projects[number]|null>(null);
  const [resume,setResume]=useState(false);
- useEffect(()=>{if(stage!=='opening')return;const t=window.setTimeout(()=>setStage('profiles'),5000);return()=>window.clearTimeout(t)},[stage]);
+ const [email,setEmail]=useState('');
+ const [otp,setOtp]=useState('');
+ const [otpSent,setOtpSent]=useState(false);
+ const [authMessage,setAuthMessage]=useState('');
+ const [busy,setBusy]=useState(false);
+ const [userId,setUserId]=useState('');
+ const [registration,setRegistration]=useState({full_name:'',company:'',job_title:'',reason:'',linkedin_url:''});
+ const [pendingName,setPendingName]=useState('');
+ const resolveUser=async(user:{id:string;email?:string})=>{
+  if(!supabase)return;
+  setUserId(user.id);
+  const {data:roleData}=await supabase.from('dt_user_roles').select('role').eq('user_id',user.id).maybeSingle();
+  if(roleData?.role==='super_admin'){setStage('profiles');return;}
+  const {data:access}=await supabase.from('dt_visitor_access').select('status,full_name').eq('user_id',user.id).maybeSingle();
+  if(access?.status==='approved'){setStage('profiles');return;}
+  if(access?.status==='pending'){setPendingName(access.full_name||'');setStage('pending');return;}
+  if(access?.status==='rejected'){setAuthMessage('Your access request was declined. Please contact the portfolio owner.');await supabase.auth.signOut();setStage('login');return;}
+  setStage('register');
+ };
+ const sendOtp=async()=>{
+  if(!supabase){setAuthMessage('Authentication is not configured. Please try again later.');return;}
+  if(!email.trim()){setAuthMessage('Enter your email address first.');return;}
+  setBusy(true);setAuthMessage('');
+  const {error}=await supabase.auth.signInWithOtp({email:email.trim().toLowerCase(),options:{shouldCreateUser:true}});
+  setBusy(false);
+  if(error){setAuthMessage(error.message);return;}
+  setOtpSent(true);setAuthMessage('A six-digit verification code has been sent to your email.');
+ };
+ const verifyOtp=async()=>{
+  if(!supabase)return;
+  setBusy(true);setAuthMessage('');
+  const {data,error}=await supabase.auth.verifyOtp({email:email.trim().toLowerCase(),token:otp.trim(),type:'email'});
+  setBusy(false);
+  if(error){setAuthMessage(error.message);return;}
+  if(data.user)await resolveUser(data.user);
+ };
+ const googleLogin=async()=>{
+  if(!supabase){setAuthMessage('Authentication is not configured.');return;}
+  const {error}=await supabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}});
+  if(error)setAuthMessage(error.message);
+ };
+ const submitRegistration=async()=>{
+  if(!supabase||!userId)return;
+  if(!registration.full_name.trim()||!registration.company.trim()||!registration.job_title.trim()||!registration.reason.trim()){setAuthMessage('Please complete your name, company, job title and reason for access.');return;}
+  setBusy(true);setAuthMessage('');
+  const {error}=await supabase.from('dt_visitor_access').insert({user_id:userId,...registration,status:'pending'});
+  setBusy(false);
+  if(error){setAuthMessage(error.message);return;}
+  setPendingName(registration.full_name);setStage('pending');
+ };
+ useEffect(()=>{if(stage!=='opening')return;const t=window.setTimeout(()=>setStage('login'),5000);return()=>window.clearTimeout(t)},[stage]);
+ useEffect(()=>{
+  if(!supabase)return;
+  supabase.auth.getSession().then(({data})=>{if(data.session?.user)resolveUser(data.session.user);});
+  const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{
+   if(session?.user)resolveUser(session.user);
+  });
+  return()=>subscription.unsubscribe();
+ },[]);
+
  const enter=(id:string)=>{setProfile(id);setStage('home');window.scrollTo({top:0,behavior:'smooth'})};
  const jump=(id:string)=>{setActive(id);document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})};
  return <div className="app-shell">
@@ -46,6 +106,32 @@ function App(){
     <div className="opening-grid"/><motion.div className="opening-mark" initial={{y:24,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:.3,duration:1}}>
      <span className="eyebrow">A PERSONAL DATA STORY</span><div className="monogram">DT<span>.</span></div><h1>DHANAVEL <em>TECH</em></h1><p>DATA · INSIGHT · IMPACT</p>
     </motion.div><div className="opening-bottom"><span>SEASON 01 · THE DATA SERIES</span><div className="progress-line"><i/></div><button onClick={()=>setStage('profiles')}>SKIP INTRO ↗</button></div>
+   </motion.section>}
+   {stage==='login'&&<motion.section className="profile-screen auth-screen" key="login" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
+    <span className="eyebrow">DHANAVEL TECH · SECURE ACCESS</span><h1>Access the<br/><em>portfolio.</em></h1><p className="muted">Verify your email to continue. New visitors can request access after verification.</p>
+    <div className="auth-panel">
+     <label>Email address</label><input type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={e=>setEmail(e.target.value)}/>
+     {otpSent&&<><label>Six-digit verification code</label><input inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="Enter email code" value={otp} onChange={e=>setOtp(e.target.value)}/></>}
+     {authMessage&&<p className="auth-message">{authMessage}</p>}
+     {!otpSent?<button className="primary-btn auth-action" disabled={busy} onClick={sendOtp}>{busy?'SENDING…':'SEND EMAIL CODE ↗'}</button>:<><button className="primary-btn auth-action" disabled={busy||otp.trim().length!==6} onClick={verifyOtp}>{busy?'VERIFYING…':'VERIFY & CONTINUE ↗'}</button><button className="text-button" onClick={()=>{setOtpSent(false);setOtp('');setAuthMessage('')}}>USE A DIFFERENT EMAIL</button></>}
+     <div className="auth-divider"><span>OR</span></div><button className="secondary-btn google-action" onClick={googleLogin}>CONTINUE WITH GOOGLE ↗</button>
+    </div><button className="text-button" onClick={()=>setStage('opening')}>↶ REPLAY OPENING</button>
+   </motion.section>}
+   {stage==='register'&&<motion.section className="profile-screen auth-screen" key="register" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
+    <span className="eyebrow">VISITOR REGISTRATION</span><h1>Request<br/><em>access.</em></h1><p className="muted">Your email is verified. Complete this short profile for admin review.</p>
+    <div className="auth-panel registration-panel">
+     <label>Full name *</label><input value={registration.full_name} onChange={e=>setRegistration({...registration,full_name:e.target.value})} placeholder="Your full name"/>
+     <label>Company *</label><input value={registration.company} onChange={e=>setRegistration({...registration,company:e.target.value})} placeholder="Company or organisation"/>
+     <label>Job title *</label><input value={registration.job_title} onChange={e=>setRegistration({...registration,job_title:e.target.value})} placeholder="Your role"/>
+     <label>Reason for access *</label><textarea value={registration.reason} onChange={e=>setRegistration({...registration,reason:e.target.value})} placeholder="Tell me why you would like to view the portfolio"/>
+     <label>LinkedIn profile (optional)</label><input value={registration.linkedin_url} onChange={e=>setRegistration({...registration,linkedin_url:e.target.value})} placeholder="https://linkedin.com/in/..."/>
+     {authMessage&&<p className="auth-message">{authMessage}</p>}
+     <button className="primary-btn auth-action" disabled={busy} onClick={submitRegistration}>{busy?'SUBMITTING…':'SUBMIT ACCESS REQUEST ↗'}</button>
+    </div>
+   </motion.section>}
+   {stage==='pending'&&<motion.section className="profile-screen auth-screen" key="pending" initial={{opacity:0}} animate={{opacity:1}}>
+    <span className="eyebrow">ACCESS REQUEST RECEIVED</span><h1>Thank you{pendingName?', '+pendingName.split(' ')[0]:''}.<br/><em>Almost there.</em></h1><p className="muted">Your email is verified and your visitor request is waiting for approval. You can return after the portfolio owner approves your access.</p>
+    <button className="secondary-btn" onClick={async()=>{await supabase?.auth.signOut();setStage('login');setOtpSent(false);}}>SIGN OUT</button>
    </motion.section>}
    {stage==='profiles'&&<motion.section className="profile-screen" key="profiles" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0}}>
     <span className="eyebrow">DHANAVEL TECH PRESENTS</span><h1>Who's exploring<br/><em>the portfolio?</em></h1><p className="muted">Choose a view to start your experience.</p>
