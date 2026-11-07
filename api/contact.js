@@ -1,1 +1,61 @@
-export default async function handler(req,res){if(req.method!=="POST"){res.setHeader("Allow","POST");return res.status(405).json({error:"Method not allowed."});}const{RESEND_API_KEY,CONTACT_FROM_EMAIL}=process.env;if(!RESEND_API_KEY||!CONTACT_FROM_EMAIL)return res.status(503).json({error:"The contact form is not configured yet. Please email me directly."});const{name,email,mobile,organisation,role,location,message,website}=req.body||{};if(website)return res.status(200).json({ok:true});for(const [key,value,max] of [["name",name,100],["email",email,160],["mobile",mobile,25],["organisation",organisation,120],["role",role,100],["location",location,120],["message",message,4000]]){if(typeof value!=="string"||!value.trim()||value.length>max)return res.status(400).json({error:"Please complete all fields with valid information."});}if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))return res.status(400).json({error:"Please enter a valid email address."});const body=["Name: "+name,"Email: "+email,"Mobile: "+mobile,"Organisation: "+organisation,"Role: "+role,"Location: "+location,"","Message:",message].join("\\n");try{const response=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+RESEND_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({from:"Dhanavel Tech <"+CONTACT_FROM_EMAIL+">",to:["dhanavelperiyasamy.cse@gmail.com"],reply_to:email,subject:"Portfolio enquiry from "+name,text:body})});const data=await response.json();if(!response.ok){console.error("Resend contact error",data);return res.status(502).json({error:"Email delivery failed. Please email me directly."});}return res.status(200).json({ok:true});}catch(error){console.error("Contact API error",error);return res.status(500).json({error:"A server error occurred. Please try again later."});}}
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ error: "Method not allowed." });
+  }
+
+  const { RESEND_API_KEY, CONTACT_FROM_EMAIL } = process.env;
+  if (!RESEND_API_KEY || !CONTACT_FROM_EMAIL) {
+    return res.status(503).json({ error: "The contact form is not configured yet. Please email me directly." });
+  }
+
+  const { name, email, mobile, organisation, role, location, message, website } = req.body || {};
+  if (website) return res.status(200).json({ ok: true });
+
+  for (const [value, max] of [[name, 100], [email, 160], [mobile, 25], [organisation, 120], [role, 100], [location, 120], [message, 4000]]) {
+    if (typeof value !== "string" || !value.trim() || value.length > max) {
+      return res.status(400).json({ error: "Please complete all fields with valid information." });
+    }
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: "Please enter a valid email address." });
+  }
+
+  const textBody = [
+    "Name: " + name,
+    "Email: " + email,
+    "Mobile: " + mobile,
+    "Organisation: " + organisation,
+    "Role: " + role,
+    "Location: " + location,
+    "",
+    "Message:",
+    message
+  ].join("\n");
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + RESEND_API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: "Dhanavel Tech <" + CONTACT_FROM_EMAIL + ">",
+        to: ["dhanavelperiyasamy.cse@gmail.com"],
+        reply_to: email,
+        subject: "Portfolio enquiry from " + name,
+        text: textBody
+      })
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      console.error("Resend contact error", result);
+      return res.status(502).json({ error: "Email delivery failed. Please email me directly." });
+    }
+    return res.status(200).json({ ok: true });
+  } catch (error) {
+    console.error("Contact API error", error);
+    return res.status(500).json({ error: "A server error occurred. Please try again later." });
+  }
+}
