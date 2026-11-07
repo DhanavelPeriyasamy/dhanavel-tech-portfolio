@@ -1,99 +1,97 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
-const EMAIL = "dhanavelperiyasamy.cse@gmail.com";
 const projects = [
- {id:"hospital",title:"Hospital Analytics Dashboard",year:"2025–Present",tag:"POWER BI · HEALTHCARE",tools:["Power BI","Excel","SQL"],desc:"An interactive healthcare dashboard exploring encounter volume, patient flow, department workload, length of stay and discharge turnaround.",details:["Demonstration data: 1,800 fictional patients, six departments and 6,500 encounters.","Readmission flags are randomly assigned, not validated 30-day readmission measures. No occupancy KPI is claimed without daily census data."],url:"https://github.com/DhanavelPeriyasamy/hospital-analytics-dashboard",tone:"blue"},
- {id:"student",title:"Student Performance Tracking System",year:"2025–Present",tag:"EXCEL · EDUCATION",tools:["Excel","Pivot Tables","Charts"],desc:"An Excel-based system for reviewing academic performance, attendance and subject trends across terms.",details:["Demonstration data: around 900 fictional students, three terms and five subjects.","Support indicators are review prompts, not predictive labels."],url:"https://github.com/DhanavelPeriyasamy/student-performance-analytics",tone:"green"},
- {id:"restaurant",title:"Restaurant Management Database",year:"2025",tag:"MYSQL · BUSINESS ANALYTICS",tools:["MySQL","Joins","Subqueries"],desc:"A database project exploring restaurant orders, customers, menu items and sales performance.",details:["Demonstration data: 3,200 fictional orders, 700 customers and eight menu items.","Estimated contribution is not audited profit and excludes labour, rent, tax, waste and other operating costs."],url:"https://github.com/DhanavelPeriyasamy/restaurant-management-analytics",tone:"gold"}
+  { title: "Hospital Analytics Dashboard", category: "POWER BI · HEALTHCARE", tools: ["Power BI", "Excel", "SQL"], description: "An interactive healthcare dashboard exploring encounter volume, patient flow, department workload, length of stay and discharge turnaround.", url: "https://github.com/DhanavelPeriyasamy/hospital-analytics-dashboard", number: "01", accent: "lavender" },
+  { title: "Student Performance Tracking System", category: "EXCEL · EDUCATION", tools: ["Excel", "Pivot Tables", "Charts"], description: "An Excel-based system for reviewing academic performance, attendance and subject trends across terms.", url: "https://github.com/DhanavelPeriyasamy/student-performance-analytics", number: "02", accent: "rose" },
+  { title: "Restaurant Management Database", category: "MYSQL · BUSINESS ANALYTICS", tools: ["MySQL", "Joins", "Subqueries"], description: "A database project exploring restaurant orders, customers, menu items and sales performance.", url: "https://github.com/DhanavelPeriyasamy/restaurant-management-analytics", number: "03", accent: "plum" }
 ];
-const certificates=[
- ["Full Stack Web Development","Infosys Springboard","QR-code certificate",""],
- ["Back-End Apps with Node.js & Express","IBM / Coursera","Verified","https://www.coursera.org/account/accomplishments/verify/7R3MBQTQWBH5"],
- ["Introduction to Front-End Development","Meta / Coursera","Verified","https://www.coursera.org/account/accomplishments/verify/STCEHNTRJXDR"],
- ["Python (Basics)","HackerRank","Verified","https://www.hackerrank.com/certificates/860558505fb0"],
- ["SQL (Advanced)","HackerRank","Verified","https://www.hackerrank.com/certificates/81325ecadf8b"],
- ["Problem Solving (Intermediate)","HackerRank","Verified","https://www.hackerrank.com/certificates/0d78613826c4"]
+const skills = [
+  { name: "Data Analytics", items: ["Data Cleaning & Preparation", "Exploratory Data Analysis", "Basic Statistics", "Business Insights", "Data Visualization", "Data Modeling"] },
+  { name: "Programming & Databases", items: ["Python", "Pandas", "NumPy", "Matplotlib", "MySQL", "MongoDB basics"] },
+  { name: "BI & Tools", items: ["Microsoft Excel", "Advanced Excel", "Power BI", "Tableau", "Git", "VS Code"] },
+  { name: "Web Technologies", items: ["HTML", "CSS", "JavaScript"] },
+  { name: "Professional Skills", items: ["Attention to detail", "Communication", "Adaptability", "Team collaboration", "Report writing"] }
 ];
-const skills=[
- ["DATA ANALYTICS","Data Cleaning & Preparation","Exploratory Data Analysis","Basic Statistics","Business Insights","Data Visualization","Data Modeling"],
- ["PROGRAMMING & DATABASES","Python","Pandas","NumPy","Matplotlib","MySQL","MongoDB basics"],
- ["BI & TOOLS","Microsoft Excel","Advanced Excel","Power BI","Tableau","Git","VS Code"],
- ["WEB TECHNOLOGIES","HTML","CSS","JavaScript"],
- ["PROFESSIONAL SKILLS","Attention to detail","Communication","Adaptability","Team collaboration","Report writing"]
+const experience = [
+  { period: "JAN – OCT 2026", role: "Business Analyst", place: "Tea Party · Pochampalli, Krishnagiri", detail: "Worked with sales, inventory, food cost and reporting." },
+  { period: "SEP 2025 – PRESENT", role: "Data Analytics Training", place: "Besant Technologies · Velachery", detail: "Training in Excel, SQL, Python and Power BI." },
+  { period: "2021 – 2025", role: "B.E. Computer Science & Engineering", place: "Karpagam Institute of Technology · Anna University", detail: "CGPA 8.0." },
+  { period: "2020 – 2021", role: "Higher Secondary Certificate", place: "Government Higher Secondary School", detail: "86.13%." },
+  { period: "2018 – 2019", role: "Secondary School Leaving Certificate", place: "Government Higher Secondary School", detail: "83%." }
 ];
-const journey=[
- ["2018–2019","SSLC","Government Higher Secondary School","83%"],
- ["2020–2021","HSC","Government Higher Secondary School","86.13%"],
- ["2021–2025","B.E. Computer Science & Engineering","Karpagam Institute of Technology · Anna University","CGPA 8.0"],
- ["Sep 2025–Present","Data Analytics Training","Besant Technologies · Velachery","Excel · SQL · Python · Power BI"],
- ["Jan–Oct 2026","Business Analyst","Tea Party · Pochampalli, Krishnagiri","Sales · Inventory · Food cost · Reporting"]
+const certificates = [
+  { title: "Full Stack Web Development", issuer: "Infosys Springboard", note: "QR-code certificate; verification URL not supplied." },
+  { title: "Back-End Apps with Node.js & Express", issuer: "IBM / Coursera", url: "https://www.coursera.org/account/accomplishments/verify/7R3MBQTQWBH5" },
+  { title: "Introduction to Front-End Development", issuer: "Meta / Coursera", url: "https://www.coursera.org/account/accomplishments/verify/STCEHNTRJXDR" },
+  { title: "Python (Basics)", issuer: "HackerRank", url: "https://www.hackerrank.com/certificates/860558505fb0" },
+  { title: "SQL (Advanced)", issuer: "HackerRank", url: "https://www.hackerrank.com/certificates/81325ecadf8b" },
+  { title: "Problem Solving (Intermediate)", issuer: "HackerRank", url: "https://www.hackerrank.com/certificates/0d78613826c4" }
 ];
-const profiles=[{id:"recruiter",name:"Recruiter",sub:"Experience, resume and strengths",symbol:"◈"},{id:"analyst",name:"Data Analyst",sub:"Projects, tools and dashboards",symbol:"▦"},{id:"explorer",name:"Project Explorer",sub:"Explore the work in detail",symbol:"⌘"}];
-type User={id:string;fullName:string;username:string;email:string;organisationName:string;professionalRole:string;location:string;role:string;emailVerified:boolean};
-type Stage="opening"|"login"|"register"|"forgot"|"reset"|"profiles"|"home";
-const blankRegistration={fullName:"",username:"",email:"",password:"",organisationName:"",professionalRole:"",location:""};
-async function api(path:string,body?:unknown){
- const response=await fetch(path,{method:body===undefined?"GET":"POST",credentials:"same-origin",headers:body===undefined?{}:{"Content-Type":"application/json"},body:body===undefined?undefined:JSON.stringify(body)});
- const data=await response.json().catch(()=>({error:"Unexpected server response."}));
- if(!response.ok)throw new Error(data.error||"Request failed.");
- return data;
-}
-function App(){
- const [stage,setStage]=useState<Stage>("opening");
- const [user,setUser]=useState<User|null>(null);
- const [profile,setProfile]=useState("recruiter");
- const [active,setActive]=useState("home");
- const [selected,setSelected]=useState<typeof projects[number]|null>(null);
- const [resume,setResume]=useState(false);
- const [identifier,setIdentifier]=useState("");
- const [password,setPassword]=useState("");
- const [registration,setRegistration]=useState(blankRegistration);
- const [resetEmail,setResetEmail]=useState("");
- const [newPassword,setNewPassword]=useState("");
- const [message,setMessage]=useState("");
- const [busy,setBusy]=useState(false);
- const [phone,setPhone]=useState("");
- const [showPhone,setShowPhone]=useState(false);
+const nav = ["Home", "About", "Skills", "Projects", "Experience", "Contact"];
+function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState("Home");
+  const [sent, setSent] = useState(false);
+  const go = (name: string) => { setActive(name); setMenuOpen(false); document.getElementById(name.toLowerCase())?.scrollIntoView({ behavior: "smooth" }); };
+  const submitContact = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const subject = encodeURIComponent(String(form.get("subject") || "Portfolio enquiry"));
+    const body = encodeURIComponent("Name: " + form.get("name") + "\nEmail: " + form.get("email") + "\n\n" + form.get("message"));
+    window.location.href = "mailto:dhanavelperiyasamy.cse@gmail.com?subject=" + subject + "&body=" + body;
+    setSent(true);
+  };
+  return <div className="portfolio">
+    <header className="site-header">
+      <a className="brand" href="#home" onClick={() => setActive("Home")}><span className="brand-mark">DT</span><span>DHANAVEL <b>TECH.</b></span></a>
+      <button className="menu-toggle" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? "✕" : "☰"}</button>
+      <nav className={menuOpen ? "nav-links open" : "nav-links"}>{nav.map(n => <button key={n} className={active === n ? "nav-link active" : "nav-link"} onClick={() => go(n)}>{n}</button>)}<a className="nav-resume" href="/resume.pdf" target="_blank" rel="noreferrer">Resume ↗</a></nav>
+    </header>
 
- useEffect(()=>{let live=true;const resetToken=new URLSearchParams(window.location.search).get("reset");if(resetToken){(window as any).__dtResetToken=resetToken;setStage("reset");setMessage("Choose a new password for your account.");window.history.replaceState({},"",window.location.pathname);return()=>{live=false;};}api("/api/me").then((d)=>{if(live){setUser(d.user);setStage("profiles");}}).catch(()=>{});return()=>{live=false;}},[]);
- useEffect(()=>{if(stage!=="opening")return;const t=window.setTimeout(()=>setStage("login"),3500);return()=>window.clearTimeout(t)},[stage]);
- 
- const run=async(fn:()=>Promise<void>)=>{setBusy(true);setMessage("");try{await fn();}catch(e){setMessage(e instanceof Error?e.message:"Something went wrong.");}finally{setBusy(false);}};
- const login=()=>run(async()=>{const d=await api("/api/login",{identifier,password});setUser(d.user);setPassword("");setStage("profiles");});
- const register=()=>run(async()=>{await api("/api/register",registration);setMessage("Registration successful. Open the verification link sent to your email, then return here to sign in.");setStage("login");setIdentifier(registration.email);setRegistration(blankRegistration);});
- const forgot=()=>run(async()=>{const d=await api("/api/forgot-password",{email:resetEmail});setMessage(d.message);});
- const reset=()=>run(async()=>{const token=(window as any).__dtResetToken||"";await api("/api/reset-password",{token,password:newPassword});setNewPassword("");setMessage("Password changed successfully. Please sign in.");setStage("login");});
- const logout=()=>run(async()=>{await api("/api/logout",{});setUser(null);setPhone("");setShowPhone(false);setStage("login");});
- const enter=(id:string)=>{setProfile(id);setStage("home");window.scrollTo({top:0,behavior:"smooth"});};
- const jump=(id:string)=>{setActive(id);document.getElementById(id)?.scrollIntoView({behavior:"smooth",block:"start"});};
- const revealPhone=()=>run(async()=>{const d=await api("/api/private/contact");setPhone(d.phone);setShowPhone(true);});
- return <div className="app-shell"><div className="ambient ambient-one"/><div className="ambient ambient-two"/>
- <AnimatePresence mode="wait">
- {stage==="opening"&&<motion.section className="opening" key="opening" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0,scale:1.03}}><div className="opening-grid"/><motion.div className="opening-mark" initial={{y:20,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:.2}}><span className="eyebrow">A PERSONAL DATA STORY</span><div className="monogram">DT<span>.</span></div><h1>DHANAVEL <em>TECH</em></h1><p>DATA · INSIGHT · IMPACT</p></motion.div><div className="opening-bottom"><span>THE DATA SERIES</span><div className="progress-line"><i/></div><button onClick={()=>setStage("login")}>SKIP INTRO ↗</button></div></motion.section>}
- {stage==="login"&&<motion.section className="profile-screen auth-screen" key="login" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}}><span className="eyebrow">DHANAVEL TECH · SECURE ACCESS</span><h1>Access the<br/><em>portfolio.</em></h1><p className="muted">Sign in with your username or email address.</p><div className="auth-panel"><label>Username or email</label><input autoComplete="username" value={identifier} onChange={e=>setIdentifier(e.target.value)} placeholder="username or you@example.com"/><label>Password</label><input type="password" autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="At least 12 characters"/>{message&&<p className="auth-message">{message}</p>}<button className="primary-btn auth-action" disabled={busy||!identifier||!password} onClick={login}>{busy?"PLEASE WAIT…":"SIGN IN ↗"}</button><button className="text-button" onClick={()=>{setMessage("");setStage("forgot")}}>FORGOT PASSWORD?</button><div className="auth-divider"><span>NEW HERE?</span></div><button className="secondary-btn google-action" onClick={()=>{setMessage("");setStage("register")}}>CREATE VISITOR ACCOUNT ↗</button></div></motion.section>}
- {stage==="register"&&<motion.section className="profile-screen auth-screen" key="register" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}}><span className="eyebrow">VISITOR REGISTRATION</span><h1>Create your<br/><em>account.</em></h1><p className="muted">Verify your email to activate instant visitor access. Password must be at least 12 characters.</p><div className="auth-panel registration-panel">
- {([["Full name","fullName","Your full name"],["Username","username","3–24 letters, numbers or underscores"],["Email address","email","you@example.com"],["Password","password","At least 12 characters"],["Organisation name","organisationName","Company or organisation"],["Professional role","professionalRole","Your role or designation"],["Location","location","City, Country"]] as const).map(([label,key,placeholder])=><div key={key}><label>{label} *</label><input type={key==="email"?"email":key==="password"?"password":"text"} autoComplete={key==="password"?"new-password":key==="email"?"email":"off"} value={registration[key]} onChange={e=>setRegistration({...registration,[key]:e.target.value})} placeholder={placeholder}/></div>)}
- {message&&<p className="auth-message">{message}</p>}<button className="primary-btn auth-action" disabled={busy} onClick={register}>{busy?"CREATING ACCOUNT…":"REGISTER & SEND VERIFICATION ↗"}</button><button className="text-button" onClick={()=>{setMessage("");setStage("login")}}>ALREADY REGISTERED? SIGN IN</button></div></motion.section>}
- {stage==="forgot"&&<motion.section className="profile-screen auth-screen" key="forgot" initial={{opacity:0}} animate={{opacity:1}}><span className="eyebrow">ACCOUNT RECOVERY</span><h1>Reset your<br/><em>password.</em></h1><div className="auth-panel"><label>Account email</label><input type="email" value={resetEmail} onChange={e=>setResetEmail(e.target.value)} placeholder="you@example.com"/>{message&&<p className="auth-message">{message}</p>}<button className="primary-btn auth-action" disabled={busy||!resetEmail} onClick={forgot}>SEND RESET LINK ↗</button><button className="text-button" onClick={()=>setStage("login")}>BACK TO SIGN IN</button></div></motion.section>}
- {stage==="reset"&&<motion.section className="profile-screen auth-screen" key="reset" initial={{opacity:0}} animate={{opacity:1}}><span className="eyebrow">ACCOUNT RECOVERY</span><h1>Choose a new<br/><em>password.</em></h1><div className="auth-panel"><label>New password</label><input type="password" autoComplete="new-password" value={newPassword} onChange={e=>setNewPassword(e.target.value)} placeholder="At least 12 characters"/>{message&&<p className="auth-message">{message}</p>}<button className="primary-btn auth-action" disabled={busy||newPassword.length<12} onClick={reset}>UPDATE PASSWORD ↗</button></div></motion.section>}
- {stage==="profiles"&&<motion.section className="profile-screen" key="profiles" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}}><span className="eyebrow">SIGNED IN · DHANAVEL TECH</span><h1>Welcome{user?.fullName?" back,":""}<br/><em>{user?.fullName||"explorer"}.</em></h1><p className="muted">Choose a view to start exploring. {user?.role==="super_admin"?"Super Admin account": "Verified visitor account"}.</p><div className="profile-grid">{profiles.map(p=><button className="profile-card" key={p.id} onClick={()=>enter(p.id)}><span className="profile-symbol">{p.symbol}</span><strong>{p.name}</strong><small>{p.sub}</small><span className="profile-arrow">↗</span></button>)}</div>{message&&<p className="auth-message">{message}</p>}<button className="text-button" onClick={logout}>SIGN OUT</button></motion.section>}
- {stage==="home"&&<motion.div className="site" key="home" initial={{opacity:0}} animate={{opacity:1}}>
- <header className="topbar"><a className="brand" href="#home" onClick={e=>{e.preventDefault();jump("home")}}><span>DT</span> DHANAVEL TECH</a><nav>{[["about","About"],["journey","Journey"],["projects","Projects"],["skills","Skills"],["certificates","Certificates"],["contact","Contact"]].map(([id,label])=><button className={active===id?"active":""} key={id} onClick={()=>jump(id)}>{label}</button>)}</nav><button className="nav-resume" onClick={()=>setResume(true)}>VIEW RESUME ↗</button></header>
- <main>
- <section className="hero-section" id="home"><div className="hero-copy"><span className="eyebrow"><i className="live-dot"/> DATA ANALYST · CHENNAI, INDIA</span><h1>Turning data<br/>into <em>direction.</em></h1><p className="hero-lede">I'm <b>Dhanavel Periyasamy</b> — a data enthusiast working across SQL, Python, Excel and Power BI to turn complex information into clear, practical insights.</p><div className="hero-actions"><button className="primary-btn" onClick={()=>jump("projects")}>EXPLORE MY WORK <span>↗</span></button><button className="secondary-btn" onClick={()=>setResume(true)}>VIEW RESUME</button></div><div className="hero-meta"><span>SQL · PYTHON · EXCEL · POWER BI</span><span>VIEW: {profiles.find(p=>p.id===profile)?.name.toUpperCase()}</span></div></div><div className="hero-art"><div className="orbit orbit-a"/><div className="orbit orbit-b"/><div className="portrait-frame"><img src="/assets/dhanavel-portrait.jpg.png" alt="Dhanavel Periyasamy"/></div><div className="float-chip chip-top"><span className="chip-dot"/> DATA STORYTELLER</div><div className="float-chip chip-bottom"><b>01</b><span>INSIGHT<br/>IN MOTION</span></div><div className="art-index">DT / 2026</div></div></section>
- <section className="ticker"><div>DATA CLEANING ✳ BUSINESS INTELLIGENCE ✳ SQL & PYTHON ✳ DASHBOARD DESIGN ✳ DATA STORYTELLING ✳</div></section>
- <section className="section about-section" id="about"><div className="section-kicker">01 / THE PERSON</div><div className="section-heading"><h2>Curiosity meets<br/><em>clarity.</em></h2><p>Computer Science graduate with a practical interest in analytics, business reporting and building dashboards that make information easier to understand.</p></div><div className="about-cards"><article className="info-card"><span>EDUCATION</span><h3>B.E. Computer Science & Engineering</h3><p>Karpagam Institute of Technology · Anna University</p><b>CGPA 8.0 · 2021–2025</b></article><article className="info-card"><span>WORK EXPERIENCE</span><h3>Business Analyst</h3><p>Tea Party · Pochampalli, Krishnagiri</p><b>January – October 2026</b></article><article className="info-card"><span>CURRENT LEARNING</span><h3>Data Analytics Training</h3><p>Besant Technologies · Velachery</p><b>September 2025 – Present</b></article></div></section>
- <section className="section journey-section" id="journey"><div className="section-kicker">02 / THE TIMELINE</div><div className="section-heading"><h2>The road to<br/><em>insight.</em></h2><p>Each chapter adds a new tool, a new perspective and a stronger foundation.</p></div><div className="timeline">{journey.map((j,i)=><div className="timeline-row" key={j[1]}><div className="timeline-year">{j[0]}</div><div className="timeline-pin"><i/></div><div className="timeline-content"><span>CHAPTER 0{i+1}</span><h3>{j[1]}</h3><p>{j[2]}</p><b>{j[3]}</b></div></div>)}</div></section>
- <section className="section projects-section" id="projects"><div className="section-kicker">03 / SELECTED WORK</div><div className="section-heading"><h2>Projects with<br/><em>purpose.</em></h2><p>Practical demonstrations across healthcare, education and restaurant data. Each project includes its scope and limitations.</p></div><div className="project-grid">{projects.map((p,i)=><motion.article className={"project-card "+p.tone} key={p.id} whileHover={{y:-7}}><div className="project-visual"><span>PROJECT / 0{i+1}</span><div className="visual-glyph">{i===0?"✳":i===1?"▥":"⌘"}</div><small>{p.tag}</small></div><div className="project-info"><div className="project-year">{p.year}</div><h3>{p.title}</h3><p>{p.desc}</p><div className="tag-row">{p.tools.map(t=><span key={t}>{t}</span>)}</div><button onClick={()=>setSelected(p)}>EXPLORE PROJECT <b>↗</b></button></div></motion.article>)}</div></section>
- <section className="section skills-section" id="skills"><div className="section-kicker">04 / THE TOOLKIT</div><div className="section-heading"><h2>Tools for<br/><em>thinking.</em></h2><p>A practical toolkit across data preparation, analysis, visualization and communication.</p></div><div className="skill-grid">{skills.map(([title,...items],i)=><article className="skill-card" key={title}><div className="skill-card-top"><span>0{i+1}</span><h3>{title}</h3></div><div className="skill-list">{items.map(s=><span key={s}>{s}</span>)}</div></article>)}</div><p className="small-note">Skills are listed without invented proficiency percentages.</p></section>
- <section className="section certificate-section" id="certificates"><div className="section-kicker">05 / VERIFIED LEARNING</div><div className="section-heading"><h2>Proof of<br/><em>progress.</em></h2><p>Six certificates from learning platforms and industry programs.</p></div><div className="certificate-list">{certificates.map((c,i)=><article className="certificate-row" key={c[0]}><span className="cert-number">0{i+1}</span><div><h3>{c[0]}</h3><p>{c[1]}</p></div><span className="cert-status">{c[2]}</span>{c[3]?<a href={c[3]} target="_blank" rel="noreferrer">VIEW ↗</a>:<span className="qr-note">QR CODE</span>}</article>)}</div></section>
- <section className="section contact-section" id="contact"><div className="contact-panel"><div className="section-kicker">06 / START A CONVERSATION</div><h2>Let's make data<br/><em>make sense.</em></h2><p>Open to connecting about data analytics, dashboards, reporting and entry-level opportunities.</p><a className="contact-email" href={"mailto:"+EMAIL}>{EMAIL} ↗</a><div className="social-links"><a href="https://www.linkedin.com/in/dhanavel-periyasamy-cse/" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="https://github.com/DhanavelPeriyasamy" target="_blank" rel="noreferrer">GITHUB ↗</a><a href="https://www.instagram.com/itx_dhana_sts/" target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="https://x.com/itx_dhana_sts" target="_blank" rel="noreferrer">X / TWITTER ↗</a></div><div className="visitor-private"><button className="secondary-btn" onClick={revealPhone}>REVEAL VERIFIED VISITOR CONTACT</button>{showPhone&&<p>{phone}</p>}</div></div></section>
- </main><footer><span>© 2026 DHANAVEL TECH</span><span>BUILT WITH CURIOSITY · POWERED BY DATA</span><button onClick={()=>setStage("profiles")}>SWITCH VIEW ↗</button><button onClick={logout}>SIGN OUT</button></footer>
- </motion.div>}
- </AnimatePresence>
- <AnimatePresence>{selected&&<motion.div className="modal-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setSelected(null)}><motion.div className="project-modal" initial={{y:25,opacity:0}} animate={{y:0,opacity:1}} exit={{y:15,opacity:0}} onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setSelected(null)}>✕</button><span className="eyebrow">PROJECT DETAIL / {selected.year}</span><h2>{selected.title}</h2><p>{selected.desc}</p><h3>Scope & notes</h3><ul>{selected.details.map(d=><li key={d}>{d}</li>)}</ul><div className="tag-row">{selected.tools.map(t=><span key={t}>{t}</span>)}</div><a className="primary-btn modal-link" href={selected.url} target="_blank" rel="noreferrer">OPEN GITHUB REPOSITORY ↗</a></motion.div></motion.div>}</AnimatePresence>
- <AnimatePresence>{resume&&<motion.div className="modal-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setResume(false)}><motion.div className="resume-modal" initial={{y:20,opacity:0}} animate={{y:0,opacity:1}} exit={{y:15,opacity:0}} onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setResume(false)}>✕</button><span className="eyebrow">THE FULL STORY</span><h2>Resume preview</h2><p>Preview your resume before downloading.</p><div className="resume-preview"><iframe title="Dhanavel Periyasamy resume preview" src="/assets/Dhanavel_Periyasamy_Resume.pdf.pdf#toolbar=0"/></div><a className="primary-btn modal-link" href="/assets/Dhanavel_Periyasamy_Resume.pdf.pdf" download="Dhanavel_Periyasamy_Resume.pdf">DOWNLOAD RESUME ↓</a></motion.div></motion.div>}</AnimatePresence>
- </div>;
+    <main>
+      <section id="home" className="hero section-wrap">
+        <div className="hero-copy">
+          <motion.p className="eyebrow" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>DATA · INSIGHT · IMPACT</motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .08 }}>Hello, I'm<br/><em>Dhanavel Periyasamy.</em></motion.h1>
+          <motion.p className="hero-lede" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .2 }}>Aspiring Data Analyst with a Computer Science background, exploring data, building useful solutions and turning information into meaningful insights.</motion.p>
+          <div className="hero-actions"><button className="button button-primary" onClick={() => go("Projects")}>Explore my work <span>↗</span></button><a className="button button-secondary" href="/resume.pdf" target="_blank" rel="noreferrer">View resume ↗</a></div>
+          <div className="hero-meta"><span>BASED IN INDIA</span><span><i/> OPEN TO OPPORTUNITIES</span></div>
+        </div>
+        <div className="hero-art" aria-label="Dhanavel Tech monogram artwork"><div className="art-orbit orbit-one"/><div className="art-orbit orbit-two"/><div className="portrait-placeholder"><span>DT</span><small>DHANAVEL TECH</small></div><div className="floating-note note-one">DATA ANALYTICS</div><div className="floating-note note-two">PYTHON · SQL · POWER BI</div><div className="art-spark">✳</div></div>
+      </section>
+
+      <div className="ticker"><div>DATA ANALYTICS <b>✳</b> PYTHON <b>✳</b> SQL <b>✳</b> POWER BI <b>✳</b> EXCEL <b>✳</b> BUSINESS INSIGHTS <b>✳</b> DATA ANALYTICS <b>✳</b></div></div>
+
+      <section id="about" className="section-wrap content-section">
+        <p className="eyebrow">01 / ABOUT</p><div className="section-heading"><h2>Curious by nature.<br/><em>Driven by data.</em></h2><p>I'm Dhanavel Periyasamy, a Computer Science graduate interested in data analytics, business problem-solving and building practical technology solutions.</p></div>
+        <div className="about-grid"><article className="about-feature"><span className="feature-symbol">✳</span><h3>My approach</h3><p>I enjoy understanding how things work, organizing information and finding patterns that can support better decisions. I keep learning by building projects and working with real-world-style datasets.</p></article><article className="about-stat"><strong>B.E.</strong><span>Computer Science & Engineering</span></article><article className="about-stat"><strong>8.0</strong><span>Undergraduate CGPA</span></article></div>
+      </section>
+
+      <section id="skills" className="section-wrap content-section section-tint">
+        <p className="eyebrow">02 / SKILLS</p><div className="section-heading"><h2>Tools for turning<br/><em>questions into clarity.</em></h2><p>A growing toolkit across analytics, programming, databases and communication. Skill levels are intentionally not represented as percentages.</p></div>
+        <div className="skills-grid">{skills.map((group, i) => <article className="skill-card" key={group.name}><div className="card-index">0{i+1}</div><h3>{group.name}</h3><div className="skill-tags">{group.items.map(item => <span key={item}>{item}</span>)}</div></article>)}</div>
+      </section>
+
+      <section id="projects" className="section-wrap content-section">
+        <p className="eyebrow">03 / SELECTED WORK</p><div className="section-heading"><h2>Projects with<br/><em>a purpose.</em></h2><p>Practical projects exploring analytics, reporting and database design. Open a repository to explore the implementation.</p></div>
+        <div className="projects-grid">{projects.map(p => <article className={"project-card " + p.accent} key={p.number}><div className="project-top"><span>PROJECT / {p.number}</span><span>↗</span></div><div className="project-art"><div className="chart-bars"><i/><i/><i/><i/><i/><i/></div><span className="art-label">{p.category}</span></div><div className="project-body"><p className="project-category">{p.category}</p><h3>{p.title}</h3><p>{p.description}</p><div className="skill-tags">{p.tools.map(t => <span key={t}>{t}</span>)}</div><a className="text-link" href={p.url} target="_blank" rel="noreferrer">VIEW ON GITHUB ↗</a></div></article>)}</div>
+      </section>
+
+      <section id="experience" className="section-wrap content-section section-tint">
+        <p className="eyebrow">04 / EXPERIENCE & EDUCATION</p><div className="section-heading"><h2>The path so<br/><em>far.</em></h2><p>Education, training and professional experience that have shaped my approach to technology and business.</p></div>
+        <div className="timeline">{experience.map((item, i) => <article className="timeline-item" key={item.period}><div className="timeline-date">{item.period}</div><div className="timeline-dot"/><div className="timeline-info"><span>0{i+1}</span><h3>{item.role}</h3><b>{item.place}</b><p>{item.detail}</p></div></article>)}</div>
+        <div className="certificates"><div className="cert-heading"><h3>Certifications & learning</h3><span>06 RECORDS</span></div><div className="cert-grid">{certificates.map(c => <article className="cert-card" key={c.title}><span className="cert-icon">✳</span><h4>{c.title}</h4><p>{c.issuer}</p>{c.url ? <a href={c.url} target="_blank" rel="noreferrer">VERIFY CERTIFICATE ↗</a> : <small>{c.note}</small>}</article>)}</div></div>
+      </section>
+
+      <section id="contact" className="section-wrap contact-section">
+        <div className="contact-copy"><p className="eyebrow">05 / CONTACT</p><h2>Have a question<br/>or an opportunity?<br/><em>Let's talk.</em></h2><p>I'm happy to connect about data, projects, learning and professional opportunities.</p><a className="contact-email" href="mailto:dhanavelperiyasamy.cse@gmail.com">dhanavelperiyasamy.cse@gmail.com ↗</a><div className="social-links"><a href="https://www.linkedin.com/in/dhanavel-periyasamy-cse/" target="_blank" rel="noreferrer">LINKEDIN ↗</a><a href="https://www.instagram.com/itx_dhana_sts/" target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="https://x.com/itx_dhana_sts" target="_blank" rel="noreferrer">X ↗</a></div></div>
+        <form className="contact-form" onSubmit={submitContact}><label>Your name<input name="name" required placeholder="Your full name"/></label><label>Email address<input name="email" type="email" required placeholder="you@example.com"/></label><label>Subject<input name="subject" required placeholder="What would you like to discuss?"/></label><label>Message<textarea name="message" rows={4} required placeholder="Write your message..."/></label><button className="button button-primary" type="submit">Send message <span>↗</span></button>{sent && <small className="form-note">Your email app should open with your message ready to send.</small>}</form>
+      </section>
+
+      <section className="resume-strip section-wrap"><div><p className="eyebrow">WANT THE DETAILS?</p><h2>Take a closer look<br/><em>at my journey.</em></h2></div><a className="button button-primary" href="/resume.pdf" target="_blank" rel="noreferrer">View my resume ↗</a></section>
+    </main>
+    <footer className="site-footer"><a className="brand" href="#home"><span className="brand-mark">DT</span><span>DHANAVEL <b>TECH.</b></span></a><p>Designed with curiosity. Built with purpose.</p><span>© {new Date().getFullYear()} DHANAVEL PERIYASAMY</span></footer>
+  </div>;
 }
 export default App;
