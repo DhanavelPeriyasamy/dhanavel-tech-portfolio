@@ -1,5 +1,47 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/skills",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/experience",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/certificates",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/resume",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/hospital-analytics",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/student-performance",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/restaurant-database",
+      "destination": "/index.html"
+    }
+  ]
 }
