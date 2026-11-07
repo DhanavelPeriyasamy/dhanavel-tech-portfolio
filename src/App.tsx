@@ -90,9 +90,10 @@ function App(){
  useEffect(()=>{if(stage!=='opening')return;const t=window.setTimeout(()=>setStage('login'),5000);return()=>window.clearTimeout(t)},[stage]);
  useEffect(()=>{
   if(!supabase)return;
-  supabase.auth.getSession().then(({data})=>{if(data.session?.user)resolveUser(data.session.user);});
-  const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,session)=>{
-   if(session?.user)resolveUser(session.user);
+  // Keep the login screen as the mandatory first step on every fresh page load.
+  // Only process a newly completed sign-in (OTP or Google OAuth), not a restored session.
+  const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
+   if(event==='SIGNED_IN'&&session?.user)resolveUser(session.user);
   });
   return()=>subscription.unsubscribe();
  },[]);
