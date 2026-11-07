@@ -240,3 +240,7 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
 
 /* Slightly zoom out the About portrait */
 .about-story-portrait img{transform:scale(.94);transform-origin:center center}
+
+
+/* Keep every brand logo circular in the header and footer */
+.brand-logo{border-radius:50%;object-fit:cover;overflow:hidden}
