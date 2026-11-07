@@ -236,3 +236,7 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
   text-justify: inter-word;
   hyphens: auto;
 }
+
+
+/* Slightly zoom out the About portrait */
+.about-story-portrait img{transform:scale(.94);transform-origin:center center}
