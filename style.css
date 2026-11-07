@@ -226,3 +226,13 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
   .about-story-portrait{height:min(115vw,620px);min-height:420px}
   .about-signature img{width:210px;height:64px}
 }
+
+
+/* About story justified text */
+.about-story-copy > p,
+.about-story-copy .about-story-opening,
+.about-story-copy .about-story-closing {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
