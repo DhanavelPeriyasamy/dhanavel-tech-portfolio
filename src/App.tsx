@@ -85,7 +85,7 @@ function App(){
   const {error}=await supabase.from('dt_visitor_access').insert({user_id:userId,...registration,status:'pending'});
   setBusy(false);
   if(error){setAuthMessage(error.message);return;}
-  setPendingName(registration.full_name);setStage('pending');
+  setPendingName(registration.full_name);setStage('profiles');
  };
  useEffect(()=>{if(stage!=='opening')return;const t=window.setTimeout(()=>setStage('login'),5000);return()=>window.clearTimeout(t)},[stage]);
  useEffect(()=>{
@@ -119,7 +119,7 @@ function App(){
     </div><button className="text-button" onClick={()=>setStage('opening')}>↶ REPLAY OPENING</button>
    </motion.section>}
    {stage==='register'&&<motion.section className="profile-screen auth-screen" key="register" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
-    <span className="eyebrow">VISITOR REGISTRATION</span><h1>Request<br/><em>access.</em></h1><p className="muted">Your email is verified. Complete this short profile for admin review.</p>
+    <span className="eyebrow">VISITOR REGISTRATION</span><h1>Request<br/><em>access.</em></h1><p className="muted">Your email is verified. Complete your profile to get instant access to the portfolio.</p>
     <div className="auth-panel registration-panel">
      <label>Full name *</label><input value={registration.full_name} onChange={e=>setRegistration({...registration,full_name:e.target.value})} placeholder="Your full name"/>
      <label>Company *</label><input value={registration.company} onChange={e=>setRegistration({...registration,company:e.target.value})} placeholder="Company or organisation"/>
@@ -127,7 +127,7 @@ function App(){
      <label>Reason for access *</label><textarea value={registration.reason} onChange={e=>setRegistration({...registration,reason:e.target.value})} placeholder="Tell me why you would like to view the portfolio"/>
      <label>LinkedIn profile (optional)</label><input value={registration.linkedin_url} onChange={e=>setRegistration({...registration,linkedin_url:e.target.value})} placeholder="https://linkedin.com/in/..."/>
      {authMessage&&<p className="auth-message">{authMessage}</p>}
-     <button className="primary-btn auth-action" disabled={busy} onClick={submitRegistration}>{busy?'SUBMITTING…':'SUBMIT ACCESS REQUEST ↗'}</button>
+     <button className="primary-btn auth-action" disabled={busy} onClick={submitRegistration}>{busy?'SUBMITTING…':'SUBMIT & ENTER PORTFOLIO ↗'}</button>
     </div>
    </motion.section>}
    {stage==='pending'&&<motion.section className="profile-screen auth-screen" key="pending" initial={{opacity:0}} animate={{opacity:1}}>
