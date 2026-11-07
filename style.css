@@ -183,3 +183,35 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
   width:26px;
   height:26px;
 }
+
+
+/* About page — editorial story layout */
+.about-story-section{padding-top:78px;padding-bottom:110px}
+.about-story-layout{display:grid;grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);gap:clamp(38px,6vw,82px);align-items:stretch}
+.about-story-portrait{position:relative;align-self:stretch;min-height:100%;margin:0;background:#eadfed;overflow:hidden;box-shadow:18px 18px 0 var(--lav)}
+.about-story-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 24%}
+.about-story-portrait figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;background:linear-gradient(transparent,rgba(24,8,39,.88));color:#fff;font:700 10px "DM Mono";letter-spacing:.13em}
+.about-story-portrait figcaption span{display:block;margin-top:5px;color:#e2c9f6;font-size:8px;font-weight:400}
+.about-story-copy{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.about-story-copy>.eyebrow{margin:0 0 18px}
+.about-story-copy h2{font-size:clamp(29px,3.2vw,43px);line-height:1.15;margin:0 0 24px}
+.about-story-copy>p{font-size:13px;line-height:1.95;color:var(--muted);margin:0 0 15px}
+.about-story-copy>p strong{color:var(--ink);font-weight:700}
+.about-story-copy .about-story-opening{font:500 18px/1.65 Manrope,sans-serif;color:var(--purple);letter-spacing:-.02em;margin-bottom:20px}
+.about-story-copy .about-story-closing{font:500 15px/1.8 Manrope,sans-serif;color:var(--purple);margin-top:5px}
+.about-signature{align-self:flex-end;text-align:right;margin-top:auto;padding-top:35px;color:var(--ink);display:flex;flex-direction:column;align-items:flex-end}
+.about-signature>span{font:italic 12px Georgia,serif;color:var(--muted)}
+.about-signature strong{font:italic 38px/1.15 "Brush Script MT","Segoe Script",cursive;font-weight:500;color:var(--purple);transform:rotate(-5deg);padding:5px 0 2px}
+.about-signature b{font:8px "DM Mono";letter-spacing:.16em;color:#9872b1}
+@media(max-width:800px){
+  .about-story-layout{grid-template-columns:minmax(0,1fr);gap:42px}
+  .about-story-portrait{height:min(115vw,620px);min-height:420px;box-shadow:12px 12px 0 var(--lav)}
+  .about-story-copy h2{font-size:clamp(30px,7vw,42px)}
+  .about-signature{margin-top:28px}
+}
+@media(max-width:480px){
+  .about-story-section{padding-top:55px;padding-bottom:75px}
+  .about-story-portrait{min-height:390px}
+  .about-story-copy>p{font-size:12px}
+  .about-story-copy .about-story-opening{font-size:16px}
+}
