@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
+const root = dirname(fileURLToPath(import.meta.url));
 const pages = [
   "index.html", "about.html", "skills.html", "projects.html",
   "experience.html", "certificates.html", "contact.html", "resume.html",
@@ -12,7 +14,7 @@ const pages = [
 export default defineConfig({
   build: {
     rollupOptions: {
-      input: Object.fromEntries(pages.map((page) => [page.replaceAll("/", "-").replace(".html", ""), resolve(__dirname, page)]))
+      input: Object.fromEntries(pages.map((page) => [page.replaceAll("/", "-").replace(".html", ""), resolve(root, page)]))
     }
   }
 });
