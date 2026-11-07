@@ -7,3 +7,11 @@
 .auth-panel input,.auth-panel textarea{width:100%;box-sizing:border-box;padding:14px 15px;color:#eef6ff;background:#071426;border:1px solid rgba(130,175,225,.28);border-radius:9px;font:inherit;outline:none}
 .auth-panel input:focus,.auth-panel textarea:focus{border-color:#4b9cff;box-shadow:0 0 0 3px rgba(75,156,255,.12)}
 .auth-panel textarea{min-height:90px;resize:vertical}.auth-action,.google-action{width:100%;justify-content:center;margin-top:18px}.auth-message{color:#9ecaff;font-size:13px;line-height:1.6;margin:14px 0}.auth-divider{display:flex;align-items:center;gap:12px;margin:22px 0 4px;color:#7890ad;font-size:11px}.auth-divider:before,.auth-divider:after{content:'';height:1px;flex:1;background:rgba(130,175,225,.2)}.registration-panel{max-width:500px}
+
+/* Final authentication and account layout refinements */
+.auth-panel .text-button{display:block;margin:14px auto 0}
+.auth-panel .auth-divider{margin-top:24px}
+.visitor-private{margin-top:26px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.visitor-private p{color:#b9d8f5;font:14px 'DM Mono';margin:0}
+footer button{cursor:pointer}
+.auth-panel input{margin-bottom:4px}
