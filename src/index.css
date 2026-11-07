@@ -15,3 +15,103 @@
 .visitor-private p{color:#b9d8f5;font:14px 'DM Mono';margin:0}
 footer button{cursor:pointer}
 .auth-panel input{margin-bottom:4px}
+
+
+/* DHANAVEL TECH — warm cream / deep purple / lavender brand theme */
+:root{
+  color-scheme:light;
+  --cream:#FFF7F3;
+  --purple:#210D35;
+  --lavender:#D0ADFF;
+  --blue:var(--purple);
+  --muted:#715F7E;
+  --line:rgba(33,13,53,.15);
+  color:var(--purple);
+  background:var(--cream);
+}
+html,body{background:var(--cream);color:var(--purple)}
+.app-shell{background:radial-gradient(ellipse at 78% 0%,rgba(208,173,255,.34),transparent 42%),var(--cream);color:var(--purple)}
+.ambient{opacity:.18}
+.ambient-one{background:#D0ADFF}
+.ambient-two{background:#210D35}
+.opening,.profile-screen{background:var(--cream);color:var(--purple)}
+.opening-grid{background-image:linear-gradient(rgba(33,13,53,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(33,13,53,.055) 1px,transparent 1px)}
+.eyebrow,.section-kicker{color:#76529A}
+.monogram{color:var(--purple)}
+.monogram span,.opening h1 em,.profile-screen h1 em,.section-heading h2 em,.hero-copy h1 em,.contact-panel h2 em{color:#8C5CC2}
+.opening-mark>p,.opening-bottom,.muted{color:#715F7E}
+.opening-bottom button,.text-button{color:#5C456D}
+.progress-line{background:#E7D9F1}
+.progress-line i{background:var(--lavender)}
+.topbar{background:rgba(255,247,243,.9);border-color:var(--line);box-shadow:0 8px 28px rgba(33,13,53,.045)}
+.brand{color:var(--purple)}
+.brand span{background:var(--purple);color:var(--cream)}
+.topbar nav button,.nav-resume{color:#5C456D}
+.topbar nav button.active,.topbar nav button:hover{color:#8051B4}
+.nav-resume{border-color:#B99AD8;color:var(--purple)}
+.hero-section{background:transparent}
+.live-dot,.chip-dot{background:#8B63B5;box-shadow:0 0 12px rgba(139,99,181,.45)}
+.hero-lede,.section-heading>p,.info-card p,.info-card b,.timeline-content p,.timeline-content b,.project-info p,.small-note{color:#715F7E}
+.hero-lede b,.timeline-content b{color:var(--purple)}
+.primary-btn{background:var(--purple);color:var(--cream)}
+.primary-btn:hover{background:#43205F;color:#fff}
+.secondary-btn{background:#EADDF8;color:var(--purple);border:1px solid #C9A9E9}
+.hero-meta{color:#806F8D}
+.hero-meta b{color:#8051B4}
+.portrait-frame{border-color:#B994E0;box-shadow:0 25px 90px rgba(33,13,53,.15)}
+.orbit{border-color:rgba(117,75,158,.22)}
+.float-chip{background:#fffaf8;border-color:#D8C2EA;color:var(--purple);box-shadow:0 12px 40px rgba(33,13,53,.10)}
+.chip-bottom b{color:#8051B4}
+.chip-bottom span,.art-index{color:#715F7E}
+.ticker{background:#F0E5F5;border-color:var(--line)}
+.ticker div{color:#5C456D}
+.ticker b{color:#8051B4}
+.info-card,.skill-card{background:#FFFCFA;border-color:var(--line);box-shadow:0 12px 34px rgba(33,13,53,.045)}
+.info-card>span,.skill-card-top span{color:#8051B4}
+.info-card h3,.timeline-content h3,.project-info h3,.certificate-row h3{color:var(--purple)}
+.timeline-pin:before{background:#D8C5E7}
+.timeline-pin i{background:#9A6AC8;box-shadow:0 0 15px rgba(154,106,200,.4)}
+.timeline-year,.timeline-content>span{color:#806F8D}
+.project-card{background:#FFFCFA;border-color:var(--line);box-shadow:0 12px 34px rgba(33,13,53,.045)}
+.project-card:hover{border-color:#B994E0}
+.project-visual{background:radial-gradient(circle at 70% 30%,rgba(208,173,255,.48),transparent 55%),linear-gradient(130deg,#E9DDF2,#D8C5E7)}
+.project-card.green .project-visual{background:radial-gradient(circle at 70% 30%,rgba(208,173,255,.5),transparent 55%),linear-gradient(130deg,#F1E6F2,#E3D4EA)}
+.project-card.gold .project-visual{background:radial-gradient(circle at 70% 30%,rgba(208,173,255,.55),transparent 55%),linear-gradient(130deg,#F1E5EE,#E5D4E7)}
+.project-visual span,.project-visual small{color:#43205F}
+.visual-glyph{color:rgba(33,13,53,.12)}
+.project-year{color:#806F8D}
+.tag-row span{color:#5C456D;border-color:var(--line);background:#F7EFFB}
+.project-info button{border-color:var(--line);color:#8051B4}
+.skill-card-top h3{color:var(--purple)}
+.skill-list span{background:#F0E5F8;color:#43205F}
+.certificate-list,.certificate-row{border-color:var(--line)}
+.cert-number{color:#8051B4}
+.cert-status,.qr-note{color:#806F8D}
+.certificate-row>a{color:#8051B4}
+.contact-panel{background:radial-gradient(ellipse at 85% 20%,rgba(208,173,255,.28),transparent 50%),linear-gradient(130deg,#210D35,#35194B);border-color:#5B3A78}
+.contact-panel .section-kicker{color:#D0ADFF}
+.contact-panel h2{color:#FFF7F3}
+.contact-panel>p{color:#E3D5EF}
+.contact-email{color:#D0ADFF}
+.social-links a{color:#F0E5F8}
+footer{border-color:var(--line);color:#806F8D}
+footer button{color:#8051B4}
+.modal-backdrop{background:rgba(24,8,38,.72)}
+.project-modal,.resume-modal{background:#FFF7F3;border-color:#C9A9E9;box-shadow:0 25px 90px rgba(20,5,35,.25)}
+.project-modal h2,.resume-modal h2,.project-modal h3{color:var(--purple)}
+.project-modal p,.resume-modal p,.project-modal li{color:#715F7E}
+.modal-close{background:#EADDF8;color:var(--purple);border-color:#D8C2EA}
+.auth-panel{background:#FFFCFA;border-color:#D8C2EA;box-shadow:0 24px 80px rgba(33,13,53,.10)}
+.auth-panel label{color:#5C456D}
+.auth-panel input,.auth-panel textarea{color:var(--purple);background:#FFF7F3;border-color:#D8C2EA}
+.auth-panel input:focus,.auth-panel textarea:focus{border-color:#9A6AC8;box-shadow:0 0 0 3px rgba(208,173,255,.28)}
+.auth-message{color:#68438B}
+.auth-divider{color:#806F8D}
+.auth-divider:before,.auth-divider:after{background:var(--line)}
+.profile-card{background:linear-gradient(145deg,#FFFCFA,#F3EAF8);border-color:#D8C2EA;color:var(--purple);box-shadow:0 12px 34px rgba(33,13,53,.055)}
+.profile-card:hover{border-color:#9A6AC8;box-shadow:0 18px 60px rgba(33,13,53,.12)}
+.profile-symbol{background:#EADDF8;color:#68438B}
+.profile-card small{color:#715F7E}
+.profile-arrow{color:#8051B4}
+.visitor-private p{color:var(--purple)}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
