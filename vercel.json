@@ -40,7 +40,23 @@
       "destination": "/index.html"
     },
     {
-      "source": "/projects/restaurant-database",
+      "source": "/projects/restaurant-management-analytics",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/hospital-analytics/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/student-performance/dashboard",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/restaurant-management-analytics",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/projects/restaurant-management-analytics/dashboard",
       "destination": "/index.html"
     }
   ]
