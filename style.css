@@ -244,3 +244,7 @@ h2{font-size:clamp(38px,5vw,58px);font-weight:600;margin:12px 0 22px}
 
 /* Keep every brand logo circular in the header and footer */
 .brand-logo{border-radius:50%;object-fit:cover;overflow:hidden}
+
+
+/* Slightly increase the About portrait frame width */
+@media(min-width:801px){.about-story-layout{grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr)}}
