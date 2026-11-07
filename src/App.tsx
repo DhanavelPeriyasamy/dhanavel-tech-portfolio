@@ -106,7 +106,7 @@ function App(){
    {stage==='opening'&&<motion.section className="opening" key="opening" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0,scale:1.04}} transition={{duration:.7}}>
     <div className="opening-grid"/><motion.div className="opening-mark" initial={{y:24,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:.3,duration:1}}>
      <span className="eyebrow">A PERSONAL DATA STORY</span><div className="monogram">DT<span>.</span></div><h1>DHANAVEL <em>TECH</em></h1><p>DATA · INSIGHT · IMPACT</p>
-    </motion.div><div className="opening-bottom"><span>SEASON 01 · THE DATA SERIES</span><div className="progress-line"><i/></div><button onClick={()=>setStage('profiles')}>SKIP INTRO ↗</button></div>
+    </motion.div><div className="opening-bottom"><span>SEASON 01 · THE DATA SERIES</span><div className="progress-line"><i/></div><button onClick={()=>setStage('login')}>SKIP INTRO ↗</button></div>
    </motion.section>}
    {stage==='login'&&<motion.section className="profile-screen auth-screen" key="login" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}>
     <span className="eyebrow">DHANAVEL TECH · SECURE ACCESS</span><h1>Access the<br/><em>portfolio.</em></h1><p className="muted">Verify your email to continue. New visitors can request access after verification.</p>
