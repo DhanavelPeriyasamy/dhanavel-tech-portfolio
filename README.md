@@ -29,7 +29,7 @@ Deploy as a **Vite static site** on Vercel or Netlify. Build command: `npm run b
 
 ## Add your personal assets
 1. Upload your resume to `public/assets/Dhanavel_Periyasamy_Resume.pdf`. The resume modal is configured to preview and download this file.
-2. Replace `public/assets/dhanavel-portrait.svg` with your approved portrait (or update the image path in `src/App.tsx`). The current SVG is only a temporary visual placeholder.
+2. The app expects your portrait at `public/assets/dhanavel-portrait.jpg`. Upload that file from the supplied assets ZIP. The current SVG is only a temporary visual placeholder and is not used by the hero.
 
 ## Portfolio information
 - Education: B.E. Computer Science and Engineering, Karpagam Institute of Technology, CGPA 8.0.
