@@ -86,10 +86,10 @@ function App(){
   setBusy(true);setAuthMessage('');
   const {data:existing,error:lookupError}=await supabase.from('dt_visitor_access').select('user_id').eq('user_id',userId).maybeSingle();
   if(lookupError){setBusy(false);setAuthMessage(lookupError.message);return;}
-  const payload={...registration,status:'approved',updated_at:new Date().toISOString()};
+  const payload={...registration};
   const result=existing
    ? await supabase.from('dt_visitor_access').update(payload).eq('user_id',userId)
-   : await supabase.from('dt_visitor_access').insert({user_id:userId,...payload});
+   : await supabase.from('dt_visitor_access').insert({user_id:userId,...payload,status:'approved'});
   setBusy(false);
   if(result.error){setAuthMessage(result.error.message);return;}
   setPendingName(registration.full_name);setStage('profiles');
